@@ -1,0 +1,141 @@
+# ---- COMPILER / BUILD OUTPUT ----
+# Object files
+*.o
+*.obj
+*.lo
+*.slo
+
+# Precompiled headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+*.lai
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Linker output / intermediate files
+*.map
+*.exp
+*.idb
+*.pdb
+*.ilk
+
+# Debug / profiling
+*.dSYM/
+*.gcno
+*.gcda
+*.gcov
+*.prof
+*.stackdump
+
+# Build directories
+build/
+Build/
+bin/
+Bin/
+obj/
+Obj/
+out/
+Out/
+Debug/
+Release/
+x64/
+x86/
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+CTestTestfile.cmake
+cmake_install.cmake
+compile_commands.json
+Makefile
+Makefile.in
+install_manifest.txt
+
+# Ninja
+.ninja_deps
+.ninja_log
+
+# ---- IDE / EDITOR SETTINGS ----
+# CLion / JetBrains
+.idea/
+cmake-build-*/
+
+# Visual Studio / VSCode
+.vscode/
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Xcode
+*.xcworkspace
+*.xcuserstate
+*.xcuserdatad/
+*.xcbkptlist
+DerivedData/
+*.xcodeproj/project.xcworkspace/
+*.xcodeproj/xcuserdata/
+
+# Eclipse / CDT
+.project
+.cproject
+.settings/
+
+# Code::Blocks
+*.depend
+*.layout
+
+# Dev-C++
+*.dev
+
+# ---- OS / EDITOR NOISE ----
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# ---- OTHER TOOLS ----
+# gdb / lldb
+.gdb_history
+.lldb
+lldb.session
+
+# clangd / ccls index
+.cache/
+.clangd/
+.ccls-cache/
+
+# ctags
+tags
+TAGS
+
+# ---- LOGS ----
+*.log
+*.trace
