@@ -5,7 +5,7 @@
 #include <model/commandFactory/CommandFactory.h>
 
 #include "FigureService.h"
-#include "commandService/CommandFactoryRegistry.h"
+#include "services/CommandFactoryRegistry.h"
 #include "model/command/Command.h"
 #include "model/DTO/CommandDTO.h"
 

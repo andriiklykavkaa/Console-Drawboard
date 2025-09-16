@@ -1,27 +1,25 @@
-#ifndef DRAWFACTORY_H
-#define DRAWFACTORY_H
+#ifndef CLEARFACTORY_H
+#define CLEARFACTORY_H
 #include <iostream>
 
 #include "CommandFactory.h"
-#include "model/command/DrawCommand.h"
+#include "model/command/ClearCommand.h"
 
 
-class DrawFactory : public CommandFactory {
+class ClearFactory : public CommandFactory {
 
 public:
-    DrawFactory() = default;
-    ~DrawFactory() override = default;
+    ClearFactory() = default;
+    ~ClearFactory() override = default;
     std::shared_ptr<Command> build(std::vector<std::string> params) override {
         if (!params.empty()) {
             std::cout << "Invalid command arguments. 'draw' expects no parameters" << std::endl;
             return nullptr;
         }
 
-        auto command = std::make_shared<DrawCommand>();
+        auto command = std::make_shared<ClearCommand>();
         return command;
     }
 };
 
-
-
-#endif
+#endif //CLEARFACTORY_H

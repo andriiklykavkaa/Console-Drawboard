@@ -10,9 +10,7 @@ private:
 
 public:
     Rectangle(Color color, std::pair<int, int> xy, std::pair<int,int> hw);
-    ~Rectangle() = default;
-    // ~Rectangle() override = default;
-    // void draw() override;
+    void to_string() override;
 };
 
 

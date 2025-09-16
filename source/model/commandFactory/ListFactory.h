@@ -1,27 +1,27 @@
-#ifndef DRAWFACTORY_H
-#define DRAWFACTORY_H
+#ifndef LISTFACTORY_H
+#define LISTFACTORY_H
+
 #include <iostream>
 
 #include "CommandFactory.h"
-#include "model/command/DrawCommand.h"
+#include "model/command/ListCommand.h"
 
 
-class DrawFactory : public CommandFactory {
+class ListFactory : public CommandFactory {
 
 public:
-    DrawFactory() = default;
-    ~DrawFactory() override = default;
+    ListFactory() = default;
+    ~ListFactory() override = default;
     std::shared_ptr<Command> build(std::vector<std::string> params) override {
         if (!params.empty()) {
             std::cout << "Invalid command arguments. 'draw' expects no parameters" << std::endl;
             return nullptr;
         }
 
-        auto command = std::make_shared<DrawCommand>();
+        auto command = std::make_shared<ListCommand>();
         return command;
     }
 };
 
 
-
-#endif
+#endif //LISTFACTORY_H

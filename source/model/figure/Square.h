@@ -12,9 +12,7 @@ private:
 
 public:
     Square(Color color, std::pair<int, int> xy, int a);
-    ~Square() = default;
-    // ~Square() override = default;
-    // void draw() override;
+    void to_string() override;
 };
 
 

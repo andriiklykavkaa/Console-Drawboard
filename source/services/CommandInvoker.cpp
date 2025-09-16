@@ -36,6 +36,7 @@ void CommandInvoker::receive(const std::optional<CommandDTO> &dto) const {
 }
 
 void CommandInvoker::invoke(std::shared_ptr<Command> &command) const {
-    figure_service->receive(command);
+    command->set_performer(figure_service);
+    command->execute();
 }
 

@@ -9,19 +9,32 @@
 
 class Shape {
 protected:
-    static int ID_counter;
-    int ID;
+    static int id_counter;
+    int id;
 
     std::pair<int, int> xy;
     Color color;
 
 public:
     Shape(Color color, std::pair<int, int> xy)
-    : ID(ID_counter++), xy(xy), color(color)
+    : id(id_counter++), xy(xy), color(color)
     {}
 
-    // virtual ~Shape() = default;
+    ~Shape() = default;
+    virtual void to_string() = 0;
     // virtual void draw();
+
+    void set_color(Color color) {
+        this->color = color;
+    }
+
+    void set_xy(std::pair<int, int> xy) {
+        this->xy = xy;
+    }
+
+    int get_id() {
+        return id;
+    }
 };
 
 
