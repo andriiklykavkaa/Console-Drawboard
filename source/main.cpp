@@ -7,6 +7,7 @@
 
 #include "model/commandFactory/ClearFactory.h"
 #include "model/commandFactory/DisplayFactory.h"
+#include "model/commandFactory/EditFactory.h"
 #include "model/commandFactory/ListFactory.h"
 #include "model/commandFactory/LoadFactory.h"
 #include "model/commandFactory/MoveFactory.h"
@@ -16,13 +17,15 @@
 #include "model/commandFactory/SelectFactory.h"
 
 int main() {
+
+    auto board = std::make_unique<Board>(120, 20);
+
     auto data_service = std::make_unique<DataService>();
-    auto renderer = std::make_unique<Renderer>();
     auto figure_repository = std::make_unique<FigureRepository>();
 
     auto figure_service = std::make_shared<FigureService>(
         std::move(data_service),
-        std::move(renderer),
+        std::move(board),
         std::move(figure_repository)
         );
     auto fact_registry = std::make_shared<CommandFactoryRegistry>();
@@ -33,6 +36,7 @@ int main() {
     fact_registry->register_fact({std::string("add"), std::make_shared<AddFactory>()});
     fact_registry->register_fact({std::string("select"), std::make_shared<SelectFactory>()});
     fact_registry->register_fact({std::string("remove"), std::make_shared<RemoveFactory>()});
+    fact_registry->register_fact({std::string("edit"), std::make_shared<EditFactory>()});
     fact_registry->register_fact({std::string("paint"), std::make_shared<PaintFactory>()});
     fact_registry->register_fact({std::string("move"), std::make_shared<MoveFactory>()});
     fact_registry->register_fact({std::string("clear"), std::make_shared<ClearFactory>()});
@@ -48,6 +52,7 @@ int main() {
 
         std::cout << "Enter command: ";
         std::getline(std::cin, input);
+        if (input == "exit") break;
         parser->poll_events(input);
     }
     return 0;

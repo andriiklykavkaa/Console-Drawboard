@@ -5,7 +5,8 @@ enum Color {
     BLUE = 1,
     RED = 2,
     GREEN = 3,
-    WHITE = 4
+    WHITE = 4,
+    GREY  = 5
 };
 
 #endif //COLOR_H

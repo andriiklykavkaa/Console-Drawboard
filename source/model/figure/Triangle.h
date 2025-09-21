@@ -1,14 +1,14 @@
-#ifndef CIRCLE_H
-#define CIRCLE_H
+#ifndef TRIANGLE_H
+#define TRIANGLE_H
 #include "Shape.h"
 
 
-class Circle : public Shape {
+class Triangle : public Shape {
 private:
-    int r;
+    int h;
 
 public:
-    Circle(DrawMode mode, Color color, std::pair<int, int> xy, int r);
+    Triangle(DrawMode mode, Color color, std::pair<int, int> xy, int h);
     std::shared_ptr<Shape> clone() override;
 
     std::vector<std::pair<int,int>> get_px_poses() override;
@@ -18,9 +18,8 @@ public:
 
     void to_string() override;
     nlohmann::json to_json() override;
-    static std::shared_ptr<Circle> from_json(const nlohmann::json& json);
+    static std::shared_ptr<Triangle> from_json(nlohmann::json& json);
 };
-
 
 
 

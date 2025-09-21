@@ -25,8 +25,15 @@ public:
     }
 
     std::shared_ptr<Shape> get_by_id(int id) {
-        std::shared_ptr<Shape> shape = ids.find(id);
-        return (shape != ids.end()) ? shape : nullptr;
+        auto iter = ids.find(id);
+        return (iter != ids.end()) ? iter->second : nullptr;
+    }
+
+    std::shared_ptr<Shape> get_by_coords(int x, int y) {
+        for (auto it = shapes.rbegin(); it != shapes.rend(); ++it) {
+            if ((*it)->contains(x,y)) return *it;
+        }
+        return nullptr;
     }
 
     void remove_all() {
@@ -35,7 +42,7 @@ public:
     }
 
     void load_all(std::vector<std::shared_ptr<Shape>>& shapes) {
-        this->shapes = shapes;
+        this->shapes = std::move(shapes);
         for (const auto& s : shapes) {
             ids[s->get_id()] = s;
         }
@@ -53,16 +60,16 @@ public:
     }
 
     void bring_to_front(int id) {
-        auto shape = std::find_if(
+        auto iter = std::find_if(
             shapes.begin(),
             shapes.end(),
             [id](std::shared_ptr<Shape>& s){ return s->get_id() == id; }
         );
 
-        if (shape == shapes.end()) return;
-
-        shapes.erase(shape);
-        shapes.push_back(shape);
+        if (iter == shapes.end()) return;
+        auto ptr = std::move(*iter);
+        shapes.erase(iter);
+        shapes.push_back(std::move(ptr));
     }
 };
 

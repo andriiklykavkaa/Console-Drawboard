@@ -16,7 +16,7 @@ private:
 public:
 
     enum class ShapeTag {
-        Rect, Box, Circle
+        Rect, Circle, Triangle, Line
     };
 
     static Utils& shared() {
@@ -24,29 +24,42 @@ public:
         return instance;
     }
 
+    static std::optional<DrawMode> parse_mode(const std::string& str_mode) {
+        if (str_mode == "fill")
+            return std::make_optional(DrawMode::FILL);
+        if (str_mode == "frame")
+            return std::make_optional(DrawMode::FRAME);
+
+        std::cerr << "\nInvalid draw mode." << std::endl;
+        return std::nullopt;
+    }
+
     static std::optional<Color> parse_color(const std::string &str_color) {
         if (str_color == "red")
             return std::make_optional(Color::RED);
-        else if (str_color == "blue")
+        if (str_color == "blue")
             return std::make_optional(Color::BLUE);
-        else if (str_color == "green")
+        if (str_color == "green")
             return std::make_optional(Color::GREEN);
-        else if (str_color == "white")
+        if (str_color == "white")
             return std::make_optional(Color::WHITE);
-        else {
-            std::cerr << "Invalid color param." << std::endl;
-            return std::nullopt;
-        }
 
+        std::cerr << "\nInvalid color param." << std::endl;
+        return std::nullopt;
     }
 
     static std::optional<ShapeTag> tag(const std::string &str_shape) {
         if (str_shape == "rect")
             return std::make_optional(ShapeTag::Rect);
-        else {
-            std::cerr << "Invalid shape tag param." << std::endl;
-            return std::nullopt;
-        }
+        if (str_shape == "circle")
+            return std::make_optional(ShapeTag::Circle);
+        if (str_shape == "triangle")
+            return std::make_optional(ShapeTag::Triangle);
+        if (str_shape == "line")
+            return std::make_optional(ShapeTag::Line);
+
+        std::cerr << "\nInvalid shape tag param." << std::endl;
+        return std::nullopt;
     }
 
     static std::optional<std::tuple<int, int>> parse_coords(const std::string &str_x, const std::string &str_y) {
@@ -72,6 +85,17 @@ public:
             return std::nullopt;
         }
         return std::make_optional(n);
+    }
+
+    static std::string get_color_code(Color c) {
+        switch (c) {
+            case BLUE:  return "\033[34m";
+            case RED:   return "\033[31m";
+            case GREEN: return "\033[32m";
+            case WHITE: return "\033[37m";
+            case GREY:  return "\033[90m";
+            default:    return "\033[0m";
+        }
     }
 };
 
