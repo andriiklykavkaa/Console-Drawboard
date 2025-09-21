@@ -11,7 +11,7 @@ public:
     explicit DataService() = default;
     ~DataService() = default;
 
-    void load(std::vector<std::shared_ptr<Shape>>& shapes, std::string &path);
+    std::optional<std::vector<std::shared_ptr<Shape>>> load(std::string &path);
     void save(std::vector<std::shared_ptr<Shape>>& shapes, std::string &path);
 };
 

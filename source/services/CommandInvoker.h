@@ -1,7 +1,6 @@
 
 #ifndef COMMANDINVOKER_H
 #define COMMANDINVOKER_H
-#include <vector>
 #include <model/commandFactory/CommandFactory.h>
 
 #include "FigureService.h"

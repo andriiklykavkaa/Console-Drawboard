@@ -51,14 +51,13 @@ bool Triangle::contains(int x, int y) {
     return false;
 }
 
-bool Triangle::set_sizes(std::vector<int>& sizes) {
+void Triangle::set_sizes(std::vector<int>& sizes) {
     if (sizes.size() != 1) {
         std::cerr << "Error: Invalid argument count." << std::endl;
-        return false;
+        return;
     }
 
     h = sizes.at(0);
-    return true;
 }
 
 char Triangle::get_symbol() {
@@ -86,6 +85,6 @@ std::shared_ptr<Triangle> Triangle::from_json(nlohmann::json& json) {
 }
 
 void Triangle::to_string() {
-    std::cout << "ID: "<< id << ", Rectangle, x: " << xy.first  << ", y: " << xy.second << ", h="
+    std::cout << "ID: "<< id << ", Triangle, color=" << color << " x: " << xy.first  << ", y: " << xy.second << ", h="
     << h << std::endl;
 }

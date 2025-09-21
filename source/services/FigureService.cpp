@@ -8,6 +8,9 @@ bool FigureService::overlap(std::shared_ptr<Shape> new_shape) {
     auto new_px_poses = new_shape->get_px_poses();
 
     for (auto& s : repository->get_all()) {
+        if (new_shape->get_id() == s->get_id())
+            continue;
+
         if (s->get_symbol() != new_shape->get_symbol() ||
             s->get_color()  != new_shape->get_color())
             continue;
@@ -48,9 +51,10 @@ void FigureService::list() {
 }
 
 void FigureService::display() {
-    std::cout << "< Square:    [col]['square'][x][y][a]" << std::endl;
-    std::cout << "< Rectangle: [col]['rect'][x][y][w][h]" << std::endl;
-    std::cout << "< Square:    [col]['circle'][x][y][r]" << std::endl;
+    std::cout << "< Rectangle: [fill][color]['rect'][x][y][w][h]" << std::endl;
+    std::cout << "< Circle:    [fill][color]['circle'][x][y][r]" << std::endl;
+    std::cout << "< Triangle:  [fill][color]['triangle'][x][y][w][h]" << std::endl;
+    std::cout << "< Line:      [fill][color]['line'][x1][y1][x2][y2]" << std::endl;
 }
 
 void FigureService::add(std::shared_ptr<Shape> shape) {
@@ -118,7 +122,7 @@ void FigureService::edit(std::vector<int> sizes) {
         return;
     }
 
-    selected_shape = std::move(copy);
+    selected_shape->set_sizes(sizes);
 }
 
 void FigureService::paint(Color color) {
@@ -157,7 +161,7 @@ void FigureService::move(std::pair<int, int> &coods) {
         return;
     }
 
-    selected_shape = std::move(copy);
+    selected_shape->set_xy(coods);
 }
 
 void FigureService::clear() {
@@ -169,5 +173,7 @@ void FigureService::save(std::string &file_name) {
 }
 
 void FigureService::load(std::string &file_name) {
-    data_service->load(repository->get_all(), file_name);
+    std::optional<std::vector<std::shared_ptr<Shape>>> res = data_service->load(file_name);
+    if (!res.has_value()) return;
+    repository->load_all(res.value());
 }

@@ -48,9 +48,9 @@ bool Line::contains(int x, int y) {
     return false;
 }
 
-bool Line::set_sizes(std::vector<int>& sizes) {
+void Line::set_sizes(std::vector<int>& sizes) {
     std::cerr << std::endl << "Error: 'Line' cannot be resized" << std:: endl;
-    return false;
+    return;
 }
 
 char Line::get_symbol() {
@@ -80,6 +80,6 @@ std::shared_ptr<Line> Line::from_json(const nlohmann::json& json) {
 }
 
 void Line::to_string() {
-    std::cout << "ID: "<< id << ", Line, (x0, y0): (" << xy.first  << ", " << xy.second << "), (x1, y1): (" <<
+    std::cout << "ID: "<< id << ", Line, color=" << color << ", (x0, y0): (" << xy.first  << ", " << xy.second << "), (x1, y1): (" <<
         xy.first + vec.first << ", " << xy.second + vec.second << ")" << std::endl;
 }

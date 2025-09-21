@@ -15,7 +15,7 @@ CommandInvoker::CommandInvoker(
 
 std::shared_ptr<Command> CommandInvoker::build_command(const std::shared_ptr<CommandDTO> &dto) const {
     if (!fact_registry->is_fact_present(dto->name)) {
-        std::cout << "Unrecognized command." << std::endl;
+        std::cerr << "\nUnrecognized command." << std::endl;
         return nullptr;
     }
     auto fact = fact_registry->get_fact(dto->name);

@@ -3,16 +3,17 @@
 #include <iostream>
 #include <model/command/AddCommand.h>
 
-#include "model/colors/Color.h"
 #include "model/figure/Circle.h"
 #include "model/figure/Line.h"
+#include "model/figure/Rectangle.h"
 #include "model/figure/Shape.h"
 #include "model/figure/Triangle.h"
+
 #include "utils/Utils.h"
 
 std::shared_ptr<Command> AddFactory::build(std::vector<std::string> tokens) {
     if(tokens.size() < 6) {
-        std::cerr << "Invalid arguments. " << std::endl;
+        std::cerr << "\nInvalid arguments. " << std::endl;
         return nullptr;
     }
 
@@ -27,7 +28,7 @@ std::shared_ptr<Command> AddFactory::build(std::vector<std::string> tokens) {
     switch (tag.value()) {
         case Utils::ShapeTag::Rect: {
             if (tokens.size() != 6 && tokens.size() != 7) {
-                std::cerr << "Expected 6 or 7 params for rectangle." << std::endl;
+                std::cerr << "\nExpected 6 or 7 params for rectangle." << std::endl;
                 return nullptr;
             }
             auto coords = Utils::parse_coords(tokens.at(3), tokens.at(4));
@@ -43,7 +44,7 @@ std::shared_ptr<Command> AddFactory::build(std::vector<std::string> tokens) {
 
         case Utils::ShapeTag::Circle: {
             if (tokens.size() != 6) {
-                std::cerr << "Expected 6 params for circle." << std::endl;
+                std::cerr << "\nExpected 6 params for circle." << std::endl;
                 return nullptr;
             }
             auto coords = Utils::parse_coords(tokens.at(3), tokens.at(4));
@@ -58,7 +59,7 @@ std::shared_ptr<Command> AddFactory::build(std::vector<std::string> tokens) {
 
         case Utils::ShapeTag::Triangle: {
             if (tokens.size() != 6) {
-                std::cerr << "Expected 6 params for triangle." << std::endl;
+                std::cerr << "\nExpected 6 params for triangle." << std::endl;
                 return nullptr;
             }
             auto coords = Utils::parse_coords(tokens.at(3), tokens.at(4));
@@ -73,7 +74,7 @@ std::shared_ptr<Command> AddFactory::build(std::vector<std::string> tokens) {
 
         case Utils::ShapeTag::Line: {
             if (tokens.size() != 7) {
-                std::cerr << "Expected 7 params for line." << std::endl;
+                std::cerr << "\nExpected 7 params for line." << std::endl;
                 return nullptr;
             }
             auto a_coords = Utils::parse_coords(tokens.at(3), tokens.at(4));
@@ -91,7 +92,7 @@ std::shared_ptr<Command> AddFactory::build(std::vector<std::string> tokens) {
     }
 
     if (!shape) {
-        std::cerr << "Failed to build shape." << std::endl;
+        std::cerr << "\nFailed to build shape." << std::endl;
         return nullptr;
     }
     std::shared_ptr<AddCommand> command = std::make_shared<AddCommand>(shape);

@@ -3,12 +3,10 @@
 
 
 #include <vector>
-#include <model/command/Command.h>
-
-#include "infrastructure/DataService.h"
-#include "infrastructure/FigureRepository.h"
-#include "infrastructure/Renderer.h"
+#include "storage/DataService.h"
+#include "storage/FigureRepository.h"
 #include "model/colors/Color.h"
+#include "model/render/Board.h"
 
 class Shape;
 

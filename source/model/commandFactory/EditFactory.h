@@ -2,6 +2,7 @@
 #define EDITFACTORY_H
 #include "CommandFactory.h"
 #include "model/command/EditCommand.h"
+#include "utils/Utils.h"
 
 class EditFactory : public CommandFactory {
 public:

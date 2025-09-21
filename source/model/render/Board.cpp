@@ -1,32 +1,64 @@
-#include "Board.h"
+#include "model/render/Board.h"
 
-#include <iostream>
+#include "utils/Utils.h"
 
-// void Board::refresh_grid(int w, int h) {
-//     grid.clear();
-//     grid.resize(h);
-//     for (auto& row : grid) {
-//         row.assign(w, '$');
-//     }
-// }
-//
+Board::Board(int w, int h) : w(w), h(h) {
+    init_grid();
+}
 
+Board::~Board() = default;
 
-// Board::Board(const int w, const int h)
-// : w(w), h(h)
-// {
-//     refresh_grid(w, h);
-// }
+void Board::init_grid() {
+    grid.clear();
+    grid.resize(h);
+    for (auto& row : grid) {
+        row.assign(w, Pixel{'$', Color::GREY});
+    }
+}
 
-//
-//
-// void Board::draw_all() {
-//     for (auto &l: grid) {
-//         for (auto &c: l) {
-//             std::cout << c;
-//         }
-//         std::cout << std::endl;
-//     }
-// }
+void Board::draw() {
+    for (auto &l: grid) {
+        for (auto &px: l) {
+            std::cout << Utils::get_color_code(px.color) << px.symbol << "\033[0m";
+        }
+        std::cout << std::endl;
+    }
+}
 
+bool Board::validate(std::shared_ptr<Shape> shape) {
+    std::vector<std::pair<int, int>> poses = shape->get_px_poses();
+    if (poses.empty()) return false;
 
+    int count = 0;
+    for (auto [x, y] : poses) {
+        if (x >= 0 && x < w && y >= 0 && y < h) {
+            count++;
+        }
+    }
+
+    if (count == 0) return false;
+    if (count >= w * h) return false;
+
+    return true;
+}
+
+void Board::reset() {
+    grid.clear();
+    grid.resize(h);
+    for (auto& row : grid) {
+        row.assign(w, Pixel{'$', Color::WHITE});
+    }
+}
+
+void Board::set_pixels(const std::vector<std::shared_ptr<Shape>>& shapes) {
+    this->reset();
+    for (auto& shape: shapes) {
+        char sym = shape->get_symbol();
+        auto px_poses = shape->get_px_poses();
+        for (auto [x,y]: px_poses) {
+            if (y >= 0 && y < h && x >= 0 && x < w) {
+                grid[y][x] = Pixel{sym, shape->get_color()};
+            }
+        }
+    }
+}

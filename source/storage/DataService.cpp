@@ -10,8 +10,14 @@
 
 using json = nlohmann::json;
 
-void DataService::load(std::vector<std::shared_ptr<Shape>>& shapes, std::string &path) {
+std::optional<std::vector<std::shared_ptr<Shape>>> DataService::load(std::string &path) {
     std::ifstream file(path);
+
+    if (!file.is_open()) {
+        std::cerr << "\nError: Cannot open file." << std::endl;
+        return std::nullopt;
+    }
+
     nlohmann::json json;
     file >> json;
 
@@ -23,13 +29,15 @@ void DataService::load(std::vector<std::shared_ptr<Shape>>& shapes, std::string 
             else if (type == "circle")    res.emplace_back(Circle::from_json(e));
             else if (type == "triangle")  res.emplace_back(Triangle::from_json(e));
             else if (type == "line")  res.emplace_back(Line::from_json(e));
+
+            res.back()->to_string();
         } catch (std::exception& e) {
             std::cerr << "\nError: Invalid shape in JSON: " << e.what() << std::endl;
-            return;
+            return std::nullopt;
         }
     }
 
-    shapes = std::move(res);
+    return std::make_optional(res);
 }
 
 void DataService::save(std::vector<std::shared_ptr<Shape>>& shapes, std::string &path) {

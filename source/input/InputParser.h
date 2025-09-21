@@ -1,23 +1,7 @@
-
 #ifndef INPUTPARSER_H
 #define INPUTPARSER_H
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <vector>
-#include <services/CommandInvoker.h>
 
-#include "../model/DTO/CommandDTO.h"
-/*
- * COMMANDS:
- * help - get command list
- * draw - draw the board
- * shapes - get figure list
- * add [fill/frame][shape][params] - add a shape
- * select [ID]/[coords] - select a shape
- * remove [ID] - remove a shape
- * edit - [pa]
- */
+#include <services/CommandInvoker.h>
 
 class InputParser {
 private:

@@ -44,14 +44,13 @@ bool Circle::contains(int x, int y) {
     return false;
 }
 
-bool Circle::set_sizes(std::vector<int>& sizes) {
+void Circle::set_sizes(std::vector<int>& sizes) {
     if (sizes.size() != 1) {
         std::cerr << "Error: Invalid argument count" << std::endl;
-        return false;
+        return;
     }
 
     r = sizes.at(0);
-    return true;
 }
 
 char Circle::get_symbol() {
@@ -80,5 +79,5 @@ std::shared_ptr<Circle> Circle::from_json(const nlohmann::json& json) {
 }
 
 void Circle::to_string() {
-    std::cout << "ID: "<< id << ", Circle, x: " << xy.first  << ", y: " << xy.second << ", r=" << r << std::endl;
+    std::cout << "ID: "<< id << ", Circle, color=" << color << ", x: " << xy.first  << ", y: " << xy.second << ", r=" << r << std::endl;
 }

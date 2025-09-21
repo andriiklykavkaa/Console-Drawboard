@@ -43,15 +43,14 @@ bool Rectangle::contains(int x, int y) {
     return false;
 }
 
-bool Rectangle::set_sizes(std::vector<int>& sizes) {
+void Rectangle::set_sizes(std::vector<int>& sizes) {
     if (sizes.size() != 1 && sizes.size() != 2) {
         std::cerr << "Error: Invalid argument count." << std::endl;
-        return false;
+        return;
     }
 
     wh.first = sizes.at(0);
     wh.second = sizes.size() == 2 ? sizes.at(1) : sizes.at(0);
-    return true;
 }
 
 char Rectangle::get_symbol() {
@@ -81,6 +80,6 @@ std::shared_ptr<Rectangle> Rectangle::from_json(const nlohmann::json& json) {
 }
 
 void Rectangle::to_string() {
-    std::cout << "ID: "<< id << ", Rectangle, x: " << xy.first  << ", y: " << xy.second << ", w=" <<
+    std::cout << "ID: "<< id << ", Rectangle, color=" << color << " x: " << xy.first  << ", y: " << xy.second << ", w=" <<
         wh.first << ", h=" << wh.second << std::endl;
 }

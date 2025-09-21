@@ -14,7 +14,7 @@ public:
 
     std::vector<std::pair<int,int>> get_px_poses() override;
     bool contains(int x, int y) override;
-    bool set_sizes(std::vector<int>& sizes) override;
+    void set_sizes(std::vector<int>& sizes) override;
     char get_symbol() override;
 
     void to_string() override;
