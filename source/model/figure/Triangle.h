@@ -5,7 +5,7 @@
 
 class Triangle : public Shape {
 private:
-    int h;
+    int h = 0;
 
 public:
     Triangle(DrawMode mode, Color color, std::pair<int, int> xy, int h);

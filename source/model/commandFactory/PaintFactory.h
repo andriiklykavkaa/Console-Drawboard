@@ -12,13 +12,13 @@ class PaintFactory : public CommandFactory {
 public:
     PaintFactory() = default;
     ~PaintFactory() override = default;
-    std::shared_ptr<Command> build(std::vector<std::string> tokens) override {
+    std::shared_ptr<Command> build(const std::vector<std::string>& tokens) override {
         if (tokens.size() != 1) {
             std::cout << "Invalid command arguments. 'select' expects 1 param ID" << std::endl;
             return nullptr;
         }
 
-        auto color  = Utils::parse_color(tokens.at(0));
+        std::optional<Color> color  = Utils::parse_color(tokens.at(0));
         if (!color.has_value())
             return nullptr;
 

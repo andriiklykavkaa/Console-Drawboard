@@ -19,7 +19,7 @@ private:
     std::shared_ptr<Shape> selected_shape = nullptr;
     std::vector<std::shared_ptr<Shape>> shapes;
 
-    bool overlap(std::shared_ptr<Shape> shape);
+    bool overlap(const std::shared_ptr<Shape> &shape);
 
 public:
     FigureService(
@@ -32,16 +32,16 @@ public:
     void draw();
     void list();
     void display();
-    void add(std::shared_ptr<Shape>);
+    void add(const std::shared_ptr<Shape>&);
     void select(std::variant<int, std::pair<int, int>> selector);
     void remove();
-    void edit(std::vector<int> sizes);
+    void edit(std::vector<int> &sizes);
     void paint(Color color);
-    void move(std::pair<int, int>& coords);
+    void move(const std::pair<int, int>& coords);
     void clear();
 
-    void load(std::string &file_name);
-    void save(std::string &file_name);
+    void load(const std::string &file_name);
+    void save(const std::string &file_name);
 
 };
 

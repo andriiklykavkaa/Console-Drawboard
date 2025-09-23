@@ -22,7 +22,7 @@ public:
     ~CommandInvoker() = default;
 
     void receive(const std::optional<CommandDTO> &dto) const;
-    void invoke(std::shared_ptr<Command> &command) const;
+    void invoke(const std::shared_ptr<Command> &command) const;
 };
 
 

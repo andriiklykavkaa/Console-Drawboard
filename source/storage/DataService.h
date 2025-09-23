@@ -1,5 +1,4 @@
-#ifndef DATASERVICE_H
-#define DATASERVICE_H
+#pragma once
 
 #include <fstream>
 #include "model/figure/Shape.h"
@@ -11,10 +10,7 @@ public:
     explicit DataService() = default;
     ~DataService() = default;
 
-    std::optional<std::vector<std::shared_ptr<Shape>>> load(std::string &path);
-    void save(std::vector<std::shared_ptr<Shape>>& shapes, std::string &path);
+    std::optional<std::vector<std::shared_ptr<Shape>>> load(const std::string &path);
+    void save(std::vector<std::shared_ptr<Shape>>& shapes, const std::string &path);
 };
 
-
-
-#endif

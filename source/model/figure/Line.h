@@ -5,7 +5,7 @@
 
 class Line : public Shape {
 private:
-    std::pair<int,int> vec;
+    std::pair<int,int> vec = {0, 0};
 
 public:
     Line(DrawMode mode, Color color, std::pair<int, int> axy, std::pair<int,int> bxy);

@@ -11,13 +11,13 @@ class LoadFactory : public CommandFactory {
 public:
     LoadFactory() = default;
     ~LoadFactory() override = default;
-    std::shared_ptr<Command> build(std::vector<std::string> params) override {
+    std::shared_ptr<Command> build(const std::vector<std::string>& params) override {
         if (params.size() != 1) {
             std::cout << "Invalid command arguments. 'load' expects 1 parameter 'path'" << std::endl;
             return nullptr;
         }
 
-        auto command = std::make_shared<LoadCommand>(params.at(0));
+        std::shared_ptr<Command> command = std::make_shared<LoadCommand>(params.at(0));
         return command;
     }
 };

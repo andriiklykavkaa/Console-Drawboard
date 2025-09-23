@@ -4,10 +4,10 @@
 
 #include "CommandFactoryRegistry.h"
 
-bool FigureService::overlap(std::shared_ptr<Shape> new_shape) {
-    auto new_px_poses = new_shape->get_px_poses();
+bool FigureService::overlap(const std::shared_ptr<Shape>& new_shape) {
+    std::vector<std::pair<int, int>> new_px_poses = new_shape->get_px_poses();
 
-    for (auto& s : repository->get_all()) {
+    for (std::shared_ptr<Shape>& s : repository->get_all()) {
         if (new_shape->get_id() == s->get_id())
             continue;
 
@@ -15,7 +15,7 @@ bool FigureService::overlap(std::shared_ptr<Shape> new_shape) {
             s->get_color()  != new_shape->get_color())
             continue;
 
-        auto s_px_poses = s->get_px_poses();
+        const std::vector<std::pair<int, int>>& s_px_poses = s->get_px_poses();
         for (auto [nx, ny] : new_px_poses) {
             for (auto [x, y] : s_px_poses) {
                 if (nx == x && ny == y) {
@@ -44,9 +44,9 @@ void FigureService::draw() {
 
 void FigureService::list() {
     std::cout << "< SHAPES:" << std::endl;
-    auto shapes_ref = repository->get_all();
+    std::vector<std::shared_ptr<Shape>> shapes_ref = repository->get_all();
 
-    for (const auto& shape : shapes_ref)
+    for (const std::shared_ptr<Shape>& shape : shapes_ref)
         shape->to_string();
 }
 
@@ -57,7 +57,7 @@ void FigureService::display() {
     std::cout << "< Line:      [fill][color]['line'][x1][y1][x2][y2]" << std::endl;
 }
 
-void FigureService::add(std::shared_ptr<Shape> shape) {
+void FigureService::add(const std::shared_ptr<Shape>& shape) {
     if (!board->validate(shape)) {
         std::cerr << "\nError. Shape cannot be placed." << std::endl;
         return;
@@ -103,7 +103,7 @@ void FigureService::remove() {
     selected_shape = nullptr;
 }
 
-void FigureService::edit(std::vector<int> sizes) {
+void FigureService::edit(std::vector<int>& sizes) {
     if (selected_shape == nullptr) {
         std::cout << "No selected shape." << std::endl;
         return;
@@ -125,7 +125,7 @@ void FigureService::edit(std::vector<int> sizes) {
     selected_shape->set_sizes(sizes);
 }
 
-void FigureService::paint(Color color) {
+void FigureService::paint(const Color color) {
     if (selected_shape == nullptr) {
         std::cout << "No selected shape." << std::endl;
         return;
@@ -142,7 +142,7 @@ void FigureService::paint(Color color) {
     selected_shape->set_color(color);
 }
 
-void FigureService::move(std::pair<int, int> &coods) {
+void FigureService::move(const std::pair<int, int> &coods) {
     if (selected_shape == nullptr) {
         std::cerr << "\nNo selected shape." << std::endl;
         return;
@@ -168,11 +168,11 @@ void FigureService::clear() {
     repository->remove_all();
 }
 
-void FigureService::save(std::string &file_name) {
+void FigureService::save(const std::string &file_name) {
     data_service->save(repository->get_all(), file_name);
 }
 
-void FigureService::load(std::string &file_name) {
+void FigureService::load(const std::string &file_name) {
     std::optional<std::vector<std::shared_ptr<Shape>>> res = data_service->load(file_name);
     if (!res.has_value()) return;
     repository->load_all(res.value());

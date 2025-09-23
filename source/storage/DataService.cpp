@@ -10,7 +10,7 @@
 
 using json = nlohmann::json;
 
-std::optional<std::vector<std::shared_ptr<Shape>>> DataService::load(std::string &path) {
+std::optional<std::vector<std::shared_ptr<Shape>>> DataService::load(const std::string &path) {
     std::ifstream file(path);
 
     if (!file.is_open()) {
@@ -22,7 +22,7 @@ std::optional<std::vector<std::shared_ptr<Shape>>> DataService::load(std::string
     file >> json;
 
     std::vector<std::shared_ptr<Shape>> res;
-    for (auto& e: json) {
+    for (nlohmann::basic_json<>& e: json) {
         try {
             std::string type = e.at("type").get<std::string>();
             if (type == "rectangle") res.emplace_back(Rectangle::from_json(e));
@@ -40,9 +40,9 @@ std::optional<std::vector<std::shared_ptr<Shape>>> DataService::load(std::string
     return std::make_optional(res);
 }
 
-void DataService::save(std::vector<std::shared_ptr<Shape>>& shapes, std::string &path) {
+void DataService::save(std::vector<std::shared_ptr<Shape>>& shapes, const std::string &path) {
     nlohmann::json json = json::array();
-    for (auto& s: shapes) {
+    for (std::shared_ptr<Shape>& s: shapes) {
         json.push_back(s->to_json());
     }
     std::ofstream file(path);

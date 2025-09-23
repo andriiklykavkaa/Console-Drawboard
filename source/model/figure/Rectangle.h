@@ -6,7 +6,7 @@
 
 class Rectangle : public Shape {
 private:
-    std::pair<int,int> wh;
+    std::pair<int,int> wh = {0, 0};
 
 public:
     Rectangle(DrawMode mode, Color color, std::pair<int, int> xy, std::pair<int,int> hw);

@@ -16,11 +16,11 @@ class Shape {
 protected:
     static char symbol;
     static int id_counter;
-    int id;
+    int id = 0;
 
-    DrawMode mode;
-    Color color;
-    std::pair<int, int> xy;
+    DrawMode mode = DrawMode::FILL;
+    Color color = Color::WHITE;
+    std::pair<int, int> xy = {0, 0};
 
 public:
     Shape(DrawMode mode, Color color, std::pair<int, int> xy);

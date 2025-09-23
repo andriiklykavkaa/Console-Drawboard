@@ -36,7 +36,7 @@ std::vector<std::pair<int,int>> Rectangle::get_px_poses() {
 }
 
 bool Rectangle::contains(int x, int y) {
-    auto poses = get_px_poses();
+    std::vector<std::pair<int, int>> poses = get_px_poses();
     for (auto [px, py] : poses) {
         if (px == x && py == y) return true;
     }

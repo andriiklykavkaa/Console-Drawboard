@@ -18,17 +18,17 @@
 
 int main() {
 
-    auto board = std::make_unique<Board>(120, 20);
+    std::unique_ptr<Board> board = std::make_unique<Board>(120, 20);
 
-    auto data_service = std::make_unique<DataService>();
-    auto figure_repository = std::make_unique<FigureRepository>();
+    std::unique_ptr<DataService> data_service = std::make_unique<DataService>();
+    std::unique_ptr<FigureRepository> figure_repository = std::make_unique<FigureRepository>();
 
-    auto figure_service = std::make_shared<FigureService>(
+    std::shared_ptr<FigureService> figure_service = std::make_shared<FigureService>(
         std::move(data_service),
         std::move(board),
         std::move(figure_repository)
         );
-    auto fact_registry = std::make_shared<CommandFactoryRegistry>();
+    std::shared_ptr<CommandFactoryRegistry> fact_registry = std::make_shared<CommandFactoryRegistry>();
 
     fact_registry->register_fact({std::string("draw"), std::make_shared<DrawFactory>()});
     fact_registry->register_fact({std::string("list"), std::make_shared<ListFactory>()});
@@ -43,8 +43,8 @@ int main() {
     fact_registry->register_fact({std::string("save"), std::make_shared<SaveFactory>()});
     fact_registry->register_fact({std::string("load"), std::make_shared<LoadFactory>()});
 
-    auto invoker = std::make_shared<CommandInvoker>(fact_registry, figure_service);
-    auto parser = std::make_shared<InputParser>(invoker);
+    std::shared_ptr<CommandInvoker> invoker = std::make_shared<CommandInvoker>(fact_registry, figure_service);
+    std::shared_ptr<InputParser> parser = std::make_shared<InputParser>(invoker);
 
     std::cout << "Welcome to FigureBoard!" << std::endl;
     std::string input;

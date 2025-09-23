@@ -18,8 +18,8 @@ std::shared_ptr<Command> CommandInvoker::build_command(const std::shared_ptr<Com
         std::cerr << "\nUnrecognized command." << std::endl;
         return nullptr;
     }
-    auto fact = fact_registry->get_fact(dto->name);
-    auto command = fact->build(dto->params);
+    const std::shared_ptr<CommandFactory> fact = fact_registry->get_fact(dto->name);
+    const std::shared_ptr<Command> command = fact->build(dto->params);
     return command;
 }
 
@@ -28,14 +28,14 @@ void CommandInvoker::receive(const std::optional<CommandDTO> &dto) const {
     if (!dto.has_value())
         return;
 
-    auto command_data = std::make_shared<CommandDTO>(dto.value());
+    std::shared_ptr<CommandDTO> command_data = std::make_shared<CommandDTO>(dto.value());
     std::shared_ptr<Command> command = this->build_command(command_data);
     if (command == nullptr) return;
 
     this->invoke(command);
 }
 
-void CommandInvoker::invoke(std::shared_ptr<Command> &command) const {
+void CommandInvoker::invoke(const std::shared_ptr<Command> &command) const {
     command->set_performer(figure_service);
     command->execute();
 }

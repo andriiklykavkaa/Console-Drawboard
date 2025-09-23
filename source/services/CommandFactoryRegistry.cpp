@@ -1,7 +1,7 @@
 #include "CommandFactoryRegistry.h"
 
 void CommandFactoryRegistry::register_fact(
-    const std::tuple<std::string, std::shared_ptr<CommandFactory>> fact_info) {
+    const std::tuple<std::string, std::shared_ptr<CommandFactory>> &fact_info) {
     facts[std::get<0>(fact_info)] = std::get<1>(fact_info);
 }
 

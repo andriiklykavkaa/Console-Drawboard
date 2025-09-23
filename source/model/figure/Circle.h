@@ -5,7 +5,7 @@
 
 class Circle : public Shape {
 private:
-    int r;
+    int r = 0;
 
 public:
     Circle(DrawMode mode, Color color, std::pair<int, int> xy, int r);

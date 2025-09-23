@@ -10,13 +10,13 @@ class RemoveFactory : public CommandFactory {
 public:
     RemoveFactory() = default;
     ~RemoveFactory() override = default;
-    std::shared_ptr<Command> build(std::vector<std::string> params) override {
+    std::shared_ptr<Command> build(const std::vector<std::string>& params) override {
         if (!params.empty()) {
             std::cout << "Invalid command arguments. 'remove' expects no parameters" << std::endl;
             return nullptr;
         }
 
-        auto command = std::make_shared<RemoveCommand>();
+        std::shared_ptr<Command> command = std::make_shared<RemoveCommand>();
         return command;
     }
 };

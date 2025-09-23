@@ -9,7 +9,7 @@
 
 class Board {
 private:
-    int w, h;
+    int w = 0, h = 0;
     std::vector<std::vector<Pixel>> grid;
 
     void init_grid();
@@ -19,7 +19,7 @@ public:
     ~Board();
 
     void draw();
-    bool validate(std::shared_ptr<Shape> shape);
+    bool validate(const std::shared_ptr<Shape> &shape);
     void reset();
     void set_pixels(const std::vector<std::shared_ptr<Shape>>& shapes);
 };

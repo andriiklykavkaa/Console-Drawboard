@@ -36,7 +36,7 @@ void FigureRepository::load_all(std::vector<std::shared_ptr<Shape>>& shapes) {
     ids.clear();
     this->shapes = std::move(shapes);
 
-    for (const auto& s : this->shapes) {
+    for (const std::shared_ptr<Shape>& s : this->shapes) {
         ids[s->get_id()] = s;
     }
 }

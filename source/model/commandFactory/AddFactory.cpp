@@ -11,15 +11,15 @@
 
 #include "utils/Utils.h"
 
-std::shared_ptr<Command> AddFactory::build(std::vector<std::string> tokens) {
-    if(tokens.size() < 6) {
+std::shared_ptr<Command> AddFactory::build(const std::vector<std::string>& tokens) {
+    if(tokens.size() < MIN_PARAM_COUNT) {
         std::cerr << "\nInvalid arguments. " << std::endl;
         return nullptr;
     }
 
-    auto mode = Utils::parse_mode(tokens.at(0));
-    auto color = Utils::parse_color(tokens.at(1));
-    auto tag = Utils::tag(tokens.at(2));
+    const std::optional<DrawMode> mode = Utils::parse_mode(tokens.at(0));
+    const std::optional<Color> color = Utils::parse_color(tokens.at(1));
+    const std::optional<Utils::ShapeTag> tag = Utils::tag(tokens.at(2));
 
     if (!mode.has_value() || !color.has_value() || !tag.has_value())
         return nullptr;
@@ -27,13 +27,14 @@ std::shared_ptr<Command> AddFactory::build(std::vector<std::string> tokens) {
     std::shared_ptr<Shape> shape;
     switch (tag.value()) {
         case Utils::ShapeTag::Rect: {
-            if (tokens.size() != 6 && tokens.size() != 7) {
-                std::cerr << "\nExpected 6 or 7 params for rectangle." << std::endl;
+            if (tokens.size() != RECT_PARAM_COUNT_TYPE_1 && tokens.size() != RECT_PARAM_COUNT_TYPE_2) {
+                std::cerr << "\nExpected " << RECT_PARAM_COUNT_TYPE_1
+                << "or " << RECT_PARAM_COUNT_TYPE_2 << "params for rectangle." << std::endl;
                 return nullptr;
             }
-            auto coords = Utils::parse_coords(tokens.at(3), tokens.at(4));
-            auto w = Utils::parse_num(tokens.at(5));
-            auto h  = tokens.size() == 7 ? Utils::parse_num(tokens.at(6)) : w;
+            std::optional<std::pair<int, int>> coords = Utils::parse_coords(tokens.at(3), tokens.at(4));
+            std::optional<int> w = Utils::parse_num(tokens.at(5));
+            std::optional<int> h  = tokens.size() == RECT_PARAM_COUNT_TYPE_2 ? Utils::parse_num(tokens.at(6)) : w;
 
             if (!coords.has_value() || !w.has_value() || !h.has_value())
                 return nullptr;
@@ -43,12 +44,12 @@ std::shared_ptr<Command> AddFactory::build(std::vector<std::string> tokens) {
         }
 
         case Utils::ShapeTag::Circle: {
-            if (tokens.size() != 6) {
-                std::cerr << "\nExpected 6 params for circle." << std::endl;
+            if (tokens.size() != CIRCLE_PARAM_COUNT) {
+                std::cerr << "\nExpected "<< CIRCLE_PARAM_COUNT<< "params for circle." << std::endl;
                 return nullptr;
             }
-            auto coords = Utils::parse_coords(tokens.at(3), tokens.at(4));
-            auto r = Utils::parse_num(tokens.at(5));
+            std::optional<std::pair<int, int>> coords = Utils::parse_coords(tokens.at(3), tokens.at(4));
+            std::optional<int> r = Utils::parse_num(tokens.at(5));
 
             if (!coords.has_value() || !r.has_value())
                 return nullptr;
@@ -58,12 +59,12 @@ std::shared_ptr<Command> AddFactory::build(std::vector<std::string> tokens) {
         }
 
         case Utils::ShapeTag::Triangle: {
-            if (tokens.size() != 6) {
-                std::cerr << "\nExpected 6 params for triangle." << std::endl;
+            if (tokens.size() != TRIANGLE_PARAM_COUNT) {
+                std::cerr << "\nExpected " << TRIANGLE_PARAM_COUNT << " params for triangle." << std::endl;
                 return nullptr;
             }
-            auto coords = Utils::parse_coords(tokens.at(3), tokens.at(4));
-            auto h = Utils::parse_num(tokens.at(5));
+            std::optional<std::pair<int, int>> coords = Utils::parse_coords(tokens.at(3), tokens.at(4));
+            std::optional<int> h = Utils::parse_num(tokens.at(5));
 
             if (!coords.has_value() || !h.has_value())
                 return nullptr;
@@ -73,12 +74,12 @@ std::shared_ptr<Command> AddFactory::build(std::vector<std::string> tokens) {
         }
 
         case Utils::ShapeTag::Line: {
-            if (tokens.size() != 7) {
-                std::cerr << "\nExpected 7 params for line." << std::endl;
+            if (tokens.size() != LINE_PARAM_COUNT) {
+                std::cerr << "\nExpected " << LINE_PARAM_COUNT << "params for line." << std::endl;
                 return nullptr;
             }
-            auto a_coords = Utils::parse_coords(tokens.at(3), tokens.at(4));
-            auto b_coords = Utils::parse_coords(tokens.at(5), tokens.at(6));
+            std::optional<std::pair<int, int>> a_coords = Utils::parse_coords(tokens.at(3), tokens.at(4));
+            std::optional<std::pair<int, int>> b_coords = Utils::parse_coords(tokens.at(5), tokens.at(6));
 
             if (!a_coords.has_value() || !b_coords.has_value())
                 return nullptr;

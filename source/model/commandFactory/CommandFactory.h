@@ -12,7 +12,7 @@ private:
 
 public:
     virtual ~CommandFactory() = default;
-    virtual std::shared_ptr<Command> build(std::vector<std::string> params) = 0;
+    virtual std::shared_ptr<Command> build(const std::vector<std::string>& params) = 0;
 };
 
 

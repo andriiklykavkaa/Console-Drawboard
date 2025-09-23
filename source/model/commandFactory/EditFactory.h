@@ -8,7 +8,7 @@ class EditFactory : public CommandFactory {
 public:
     EditFactory() = default;
     ~EditFactory() override = default;
-    std::shared_ptr<Command> build(std::vector<std::string> params) override {
+    std::shared_ptr<Command> build(const std::vector<std::string>& params) override {
         if (params.empty()) {
             std::cerr << "Invalid command arguments. 'edit' expects parameters" << std::endl;
             return nullptr;
@@ -16,7 +16,7 @@ public:
 
         std::vector<int> sizes;
         for (auto& e_str: params) {
-            auto e = Utils::parse_num(e_str);
+            std::optional<int> e = Utils::parse_num(e_str);
             if (!e.has_value()) {
                 std::cerr << "Error: invalid arguments" << std::endl;
                 return nullptr;
@@ -24,7 +24,7 @@ public:
             sizes.push_back(e.value());
         }
 
-        auto command = std::make_shared<EditCommand>(sizes);
+        std::shared_ptr<Command> command = std::make_shared<EditCommand>(sizes);
         return command;
     }
 };

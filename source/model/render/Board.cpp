@@ -2,7 +2,7 @@
 
 #include "utils/Utils.h"
 
-Board::Board(int w, int h) : w(w), h(h) {
+Board::Board(const int w, const int h) : w(w), h(h) {
     init_grid();
 }
 
@@ -25,7 +25,7 @@ void Board::draw() {
     }
 }
 
-bool Board::validate(std::shared_ptr<Shape> shape) {
+bool Board::validate(const std::shared_ptr<Shape>& shape) {
     std::vector<std::pair<int, int>> poses = shape->get_px_poses();
     if (poses.empty()) return false;
 
@@ -52,9 +52,9 @@ void Board::reset() {
 
 void Board::set_pixels(const std::vector<std::shared_ptr<Shape>>& shapes) {
     this->reset();
-    for (auto& shape: shapes) {
+    for (const std::shared_ptr<Shape>& shape: shapes) {
         char sym = shape->get_symbol();
-        auto px_poses = shape->get_px_poses();
+        std::vector<std::pair<int, int>> px_poses = shape->get_px_poses();
         for (auto [x,y]: px_poses) {
             if (y >= 0 && y < h && x >= 0 && x < w) {
                 grid[y][x] = Pixel{sym, shape->get_color()};
